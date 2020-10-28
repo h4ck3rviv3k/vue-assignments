@@ -3,7 +3,7 @@
     <input type="text" v-model="task" required/> <input type="button" value="Add Task" @click="addTask"/>
     <div v-if="tasks.length>0">
       <p>Task List</p>
-      <show-task v-for="(tsk,index) in tasks" :key="tsk" :task-name="tsk" :index="index" :tasks="tasks"></show-task>
+      <show-task @remove="removeTask" v-for="(tsk,index) in tasks" :key="tsk" :tasks="tasksProp[index]"></show-task>
     </div>
   </div>
 </template>
@@ -26,6 +26,19 @@ export default {
     addTask: function () {
       this.tasks.push(this.task)
       this.task = ''
+    },
+    removeTask: function (index) {
+      this.tasks.splice(index, 1)
+    }
+  },
+  computed: {
+    tasksProp: function () {
+      return this.tasks.map((value, index) => {
+        return {
+          name: value,
+          position: index
+        }
+      })
     }
   }
 }

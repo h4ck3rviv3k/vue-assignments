@@ -1,7 +1,7 @@
 <template>
   <div class="task">
     <input type="checkbox" class="right-spacing" @change="strikeOut($event)"/>
-    <h2 width="20px" height="20px" :class="['right-spacing', isChecked? 'strike-out':'']">{{ taskName }} </h2> <img
+    <h2 width="20px" height="20px" :class="['right-spacing', isChecked? 'strike-out':'']">{{ tasks.name }} </h2> <img
       class="left-spacing"
       src=".././assets/cancel.png"
       width="15px"
@@ -18,16 +18,14 @@ export default {
     }
   },
   props: {
-    taskName: String,
-    index: Number,
-    tasks: Array
+    tasks: Object
   },
   methods: {
     strikeOut: function (event) {
       this.isChecked = event.currentTarget.checked
     },
     removeTask: function () {
-      this.tasks.splice(this.index,1)
+      this.$emit("remove",this.tasks.position)
     }
   }
 }
